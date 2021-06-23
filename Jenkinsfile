@@ -19,7 +19,7 @@ pipeline {
       steps {
         sh(returnStdout: true, script: '''
 			   #!/bin/bash
-			   status=\`curl -o --write-out "%{http_code}" -sfI "http://localhost:80"\`
+			   status=\`curl -o /dev/null --write-out "%{http_code}" -sfI "http://localhost:80"\`
                            if [[$status == 200]]; then
 		           echo "Status 200, OK" 
 	                   else 
