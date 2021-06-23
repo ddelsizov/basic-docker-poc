@@ -3,6 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
+        sh 'docker stop $(docker ps -a -q)'
+        sh 'docker rm $(docker ps -a -q)'
         sh 'rm -rf /opt/jenkins/projects/*'
         sh 'git clone https://github.com/ddelsizov/basic-docker-poc /opt/jenkins/projects/docker'
         sh 'docker image build -t apache-1 /opt/jenkins/projects/docker/'
@@ -19,7 +21,7 @@ pipeline {
       steps {
         sh(returnStdout: true, script: '''
 	#!/bin/bash
-options='--fail --connect-timeout 3 --retry 0 -s -o /dev/null -w %{http_code}'
+options=\'--fail --connect-timeout 3 --retry 0 -s -o /dev/null -w %{http_code}\'
 page="https://localhost:80"
 outstr=$(curl $options $page)
 retVal=$?
