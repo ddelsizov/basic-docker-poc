@@ -18,13 +18,13 @@ pipeline {
     stage('test3') {
       steps {
         sh(returnStdout: true, script: '''
-			   #!/bin/bash
-			   status=\`curl -o /dev/null --write-out "%{http_code}" -sfI "http://localhost:80"\`
-                           if [[$status == 200]]; then
-		           echo "Status 200, OK" 
-	                   else 
-		           echo "Status is $status, not OK"
-			   fi
+	#!/bin/bash
+options='--fail --connect-timeout 3 --retry 0 -s -o /dev/null -w %{http_code}'
+page="https://localhost:80"
+outstr=$(curl $options $page)
+retVal=$?
+[[ $retVal -eq 0 ]] || { echo "ERROR should have been able to pull $page, retVal=$retVal, code=$outstr"; exit 4; }
+echo "OK pulling from $page successful, retVal=$retVal, code=$outstr"
 		       ''')
       }
     }
