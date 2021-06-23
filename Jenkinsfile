@@ -22,7 +22,7 @@ pipeline {
         sh(returnStdout: true, script: '''
 	#!/bin/bash
 options=\'--fail --connect-timeout 3 --retry 0 -s -o /dev/null -w %{http_code}\'
-page="https://localhost:80"
+page="http://localhost:80"
 outstr=$(curl $options $page)
 retVal=$?
 [[ $retVal -eq 0 ]] || { echo "ERROR should have been able to pull $page, retVal=$retVal, code=$outstr"; exit 4; }
