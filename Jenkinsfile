@@ -14,11 +14,12 @@ pipeline {
     }
     stage('Test') {
      steps {
-       script {
-         if ("curl -sL -w http://localhost:80 -o /dev/null)" = "200"' {
-           echo 'Docker image executed as expected'
-             } else {
-                 echo 'Image run failed :('
-         }
+      sh '"status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:80"'
+       if [[ "$status_code" -ne 200 ]] ; then
+         echo "Docker container running"
+            else
+              echo '"Docker container is not running, code is "$status_code""'
+                fi
      }
+   }
 }
