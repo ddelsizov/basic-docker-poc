@@ -15,7 +15,7 @@ pipeline {
     stage('Test') {
      steps {
        script {
-         if sh 'curl -sL -w http://localhost:80 -o /dev/null = "200"' {
+         if ("curl -sL -w http://localhost:80 -o /dev/null)" = "200"' {
            echo 'Docker image executed as expected'
              } else {
                  echo 'Image run failed :('
