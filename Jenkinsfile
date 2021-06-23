@@ -21,7 +21,7 @@ pipeline {
       steps {
         sh(returnStdout: true, script: '''
 	#!/bin/bash
-options=\'--fail --connect-timeout 3 --retry 0 -s -o /dev/null -w %{http_code}\'
+options=\'-o /dev/null -w %{http_code} -sfI\'
 page="http://localhost:80"
 outstr=$(curl $options $page)
 retVal=$?
