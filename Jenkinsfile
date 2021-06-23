@@ -14,10 +14,14 @@ pipeline {
         }
         stage('test3') {
             steps {
-  script {
-       def response = sh(script: """curl -o --write-out "%{http_code}\n" -sfI "http://localhost:80"""");
-        if (response == 200) {echo 'Status 200, OK'} 
-	    else {echo 'Status NOT OK}
+               sh(returnStdout: true, script: '''
+			   #!/bin/bash
+			   status='curl -o --write-out "%{http_code}\n" -sfI "http://localhost:80"'
+               if $status == 200 
+		       echo "Status 200, OK" 
+	           else 
+		       echo "Status is $status, not OK"
+		    '''
                 }
             }
         }
