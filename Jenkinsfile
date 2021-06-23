@@ -21,8 +21,8 @@ pipeline {
 		           echo "Status 200, OK" 
 	                   else 
 		           echo "Status is $status, not OK"
-		       '''
-                }
+		       ''')
+	      }
             }
         }
     }
