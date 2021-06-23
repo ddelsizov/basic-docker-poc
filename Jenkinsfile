@@ -15,7 +15,7 @@ pipeline {
     stage('Test') {
      steps {
       sh '"status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:80"'
-       if ("$status_code" -ne 200) ; then
+       if ("$status_code" -ne (200)) ; then
          echo "Docker container running"
             else
               echo '"Docker container is not running, code is "$status_code""'
