@@ -15,16 +15,10 @@ pipeline {
         stage('test3') {
             steps {
   script {
-    response = sh(
-      returnStdout: true, 
-      script: "curl --write-out %{http_code} http://localhost:80");
-       def status = (response =~ /(?s).*HTTP/1.1 (\d{3}).*/);
-        if (status == 200) {
-         echo 'Status 200, OK'
-         } 
-	    else {
-         echo 'Status NOT OK'
-                    }
+    def status = sh(
+            script: "curl -o/dev/null --write-out %{http_code} -sfI "http://localhost:80"; echo \\\$?", returnStdout: true) as Integer
+        if (status == 200) {echo 'Status 200, OK'} 
+	    else {echo 'Status NOT OK}
                 }
             }
         }
