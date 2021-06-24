@@ -17,7 +17,7 @@ pipeline {
       }
     }
 
-    stage('test3') {
+    stage('Test') {
       steps {
         sh(returnStdout: true, script: '''
 	#!/bin/bash
