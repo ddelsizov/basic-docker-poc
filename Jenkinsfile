@@ -13,7 +13,7 @@ pipeline {
 
     stage('Run') {
       steps {
-        sh 'docker container run -d -p 8888:80 --name apache-web apache-1'
+        sh 'docker container run -d -p 80:80 --name apache-web apache-1'
       }
     }
 
@@ -22,7 +22,7 @@ pipeline {
         sh(returnStdout: true, script: '''
 	#!/bin/bash
 options=\'-o /dev/null -w %{http_code} -sfI\'
-page="http://localhost:8888"
+page="http://localhost:80"
 outstr=$(curl $options $page)
 retVal=$?
 [[ $retVal -eq 0 ]] || { echo "ERROR should have been able to pull $page, retVal=$retVal, code=$outstr"; exit 4; }
